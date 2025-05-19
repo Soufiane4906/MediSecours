@@ -164,7 +164,7 @@ export default function MapScreen({ navigation, route }) {
             try {
                 let {status} = await Location.requestForegroundPermissionsAsync();
                 if (status !== 'granted') {
-                    Alert.alert('Permission refusée', 'L\'accès à la localisation est nécessaire pour afficher votre position.');
+                    Alert.alert('تم رفض الإذن', 'الوصول إلى الموقع ضروري لعرض موقعك.');
                     setLoading(false);
                     return;
                 }
@@ -187,7 +187,7 @@ export default function MapScreen({ navigation, route }) {
             } catch (error) {
                 console.error("Erreur de localisation:", error);
                 setLoading(false);
-                Alert.alert("Erreur", "Impossible d'obtenir votre position actuelle.");
+                Alert.alert("خطأ", "تعذر الحصول على موقعك الحالي.");
             }
         })();
     }, []);
@@ -274,11 +274,11 @@ export default function MapScreen({ navigation, route }) {
             }
 
             Alert.alert(
-                "Appel",
-                `Appeler ${selectedProvider.name} au ${selectedProvider.contact}?`,
+                "اتصال",
+                `الاتصال بـ ${selectedProvider.name} على ${selectedProvider.contact}؟`,
                 [
-                    {text: "Annuler", style: "cancel"},
-                    {text: "Appeler", onPress: () => console.log("Appel en cours...")}
+                    {text: "إلغاء", style: "cancel"},
+                    {text: "اتصال", onPress: () => console.log("جارٍ الاتصال...")}
                 ]
             );
         }
@@ -333,7 +333,7 @@ export default function MapScreen({ navigation, route }) {
         return (
             <View style={styles.loadingContainer}>
                 <ActivityIndicator size="large" color="#e74c3c"/>
-                <Text style={styles.loadingText}>Chargement de la carte...</Text>
+                <Text style={styles.loadingText}>جاري تحميل الخريطة...</Text>
             </View>
         );
     }
@@ -394,7 +394,7 @@ export default function MapScreen({ navigation, route }) {
                         <MaterialCommunityIcons name="ambulance" size={32} color="white"/>
                     </LinearGradient>
                 </TouchableOpacity>
-                <Text style={styles.emergencyText}>URGENCE</Text>
+                <Text style={styles.emergencyText}>طوارئ</Text>
             </View>
 
             {/* Modal du fournisseur */}
@@ -417,32 +417,31 @@ export default function MapScreen({ navigation, route }) {
                                 <ScrollView style={styles.modalBody}>
                                     <View style={styles.modalInfoRow}>
                                         <MaterialCommunityIcons name="star" size={24} color="#f39c12"/>
-                                        <Text style={styles.modalInfoText}>Note: {selectedProvider.rating}/5</Text>
+                                        <Text style={styles.modalInfoText}>التقييم: {selectedProvider.rating}/5</Text>
                                     </View>
                                     <View style={styles.modalInfoRow}>
                                         <MaterialCommunityIcons name="clock" size={24} color="#3498db"/>
-                                        <Text style={styles.modalInfoText}>Temps de
-                                            réponse: {selectedProvider.responseTime}</Text>
+                                        <Text style={styles.modalInfoText}>زمن الاستجابة: {selectedProvider.responseTime}</Text>
                                     </View>
                                     <View style={styles.modalInfoRow}>
                                         <MaterialCommunityIcons name="phone" size={24} color="#2ecc71"/>
                                         <Text style={styles.modalInfoText}>{selectedProvider.contact}</Text>
                                     </View>
 
-                                    <Text style={styles.modalSectionTitle}>Services</Text>
+                                    <Text style={styles.modalSectionTitle}>الخدمات</Text>
                                     <View style={styles.servicesTags}>
                                         <View style={styles.serviceTag}>
-                                            <Text style={styles.serviceTagText}>Transport médical</Text>
+                                            <Text style={styles.serviceTagText}>نقل طبي</Text>
                                         </View>
                                         <View style={styles.serviceTag}>
-                                            <Text style={styles.serviceTagText}>Premier secours</Text>
+                                            <Text style={styles.serviceTagText}>إسعافات أولية</Text>
                                         </View>
                                         <View style={styles.serviceTag}>
-                                            <Text style={styles.serviceTagText}>Équipement médical</Text>
+                                            <Text style={styles.serviceTagText}>معدات طبية</Text>
                                         </View>
                                         {selectedProvider.type === 'premium' && (
                                             <View style={styles.serviceTag}>
-                                                <Text style={styles.serviceTagText}>Médecin à bord</Text>
+                                                <Text style={styles.serviceTagText}>طبيب على متن السيارة</Text>
                                             </View>
                                         )}
                                     </View>
@@ -453,7 +452,7 @@ export default function MapScreen({ navigation, route }) {
                                     onPress={callProvider}
                                 >
                                     <MaterialCommunityIcons name="phone" size={24} color="white"/>
-                                    <Text style={styles.modalButtonText}>Appeler</Text>
+                                    <Text style={styles.modalButtonText}>اتصال</Text>
                                 </TouchableOpacity>
 
                                 <TouchableOpacity
@@ -461,7 +460,7 @@ export default function MapScreen({ navigation, route }) {
                                     onPress={() => handleRouteCalculation(selectedProvider)}
                                 >
                                     <MaterialCommunityIcons name="map-marker-path" size={24} color="white"/>
-                                    <Text style={styles.modalButtonText}>Itinéraire</Text>
+                                    <Text style={styles.modalButtonText}>المسار</Text>
                                 </TouchableOpacity>
                             </>
                         )}
@@ -489,12 +488,12 @@ export default function MapScreen({ navigation, route }) {
                     <View style={styles.routeInfo}>
                         <View style={styles.routeInfoItem}>
                             <MaterialCommunityIcons name="map-marker-distance" size={24} color="#3498db"/>
-                            <Text style={styles.routeInfoText}>{distance} km</Text>
+                            <Text style={styles.routeInfoText}>{distance} كم</Text>
                         </View>
 
                         <View style={styles.routeInfoItem}>
                             <MaterialCommunityIcons name="clock-outline" size={24} color="#e67e22"/>
-                            <Text style={styles.routeInfoText}>{eta} min</Text>
+                            <Text style={styles.routeInfoText}>{eta} دقيقة</Text>
                         </View>
 
                         <TouchableOpacity
@@ -502,7 +501,7 @@ export default function MapScreen({ navigation, route }) {
                             onPress={callProvider}
                         >
                             <MaterialCommunityIcons name="phone" size={20} color="white"/>
-                            <Text style={styles.callButtonText}>Appeler</Text>
+                            <Text style={styles.callButtonText}>اتصال</Text>
                         </TouchableOpacity>
                     </View>
                 </Animated.View>

@@ -13,19 +13,19 @@ export default function SignUpScreen({ navigation }) {
     const handleSignUp = async () => {
         // Validate all fields are filled
         if (!username || !password || !confirmPassword || !phone) {
-            Alert.alert('Erreur', 'Veuillez remplir tous les champs');
+            Alert.alert('خطأ', 'يرجى ملء جميع الحقول');
             return;
         }
 
         // Validate password match
         if (password !== confirmPassword) {
-            Alert.alert('Erreur', 'Les mots de passe ne correspondent pas');
+            Alert.alert('خطأ', 'كلمات المرور غير متطابقة');
             return;
         }
 
         // Validate password length
         if (password.length < 6) {
-            Alert.alert('Erreur', 'Le mot de passe doit contenir au moins 6 caractères');
+            Alert.alert('خطأ', 'يجب أن تحتوي كلمة المرور على 6 أحرف على الأقل');
             return;
         }
 
@@ -38,11 +38,11 @@ export default function SignUpScreen({ navigation }) {
         if (result.success) {
             // Auto-login after successful registration
             login(username, password);
-            Alert.alert('Succès', 'Inscription réussie!', [
-                { text: 'OK', onPress: () => navigation.replace('Home') }
+            Alert.alert('نجاح', 'تم التسجيل بنجاح!', [
+                { text: 'حسنًا', onPress: () => navigation.replace('Home') }
             ]);
         } else {
-            Alert.alert('Erreur', result.message || 'Erreur lors de l\'inscription');
+            Alert.alert('خطأ', result.message || 'حدث خطأ أثناء التسجيل');
         }
 
         setIsLoading(false);
@@ -50,31 +50,31 @@ export default function SignUpScreen({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Inscription</Text>
+            <Text style={styles.title}>إنشاء حساب</Text>
             <TextInput
                 style={styles.input}
-                placeholder="Nom d'utilisateur"
+                placeholder="اسم المستخدم"
                 value={username}
                 onChangeText={setUsername}
                 autoCapitalize="none"
             />
             <TextInput
                 style={styles.input}
-                placeholder="Mot de passe"
+                placeholder="كلمة المرور"
                 secureTextEntry
                 value={password}
                 onChangeText={setPassword}
             />
             <TextInput
                 style={styles.input}
-                placeholder="Confirmer le mot de passe"
+                placeholder="تأكيد كلمة المرور"
                 secureTextEntry
                 value={confirmPassword}
                 onChangeText={setConfirmPassword}
             />
             <TextInput
                 style={styles.input}
-                placeholder="Numéro de téléphone"
+                placeholder="رقم الهاتف"
                 keyboardType="phone-pad"
                 value={phone}
                 onChangeText={setPhone}
@@ -83,7 +83,7 @@ export default function SignUpScreen({ navigation }) {
             {isLoading ? (
                 <ActivityIndicator size="large" color="#e74c3c" />
             ) : (
-                <Button title="Valider" onPress={handleSignUp} />
+                <Button title="تسجيل" onPress={handleSignUp} />
             )}
         </View>
     );
@@ -91,6 +91,6 @@ export default function SignUpScreen({ navigation }) {
 
 const styles = StyleSheet.create({
     container: { flex:1, justifyContent:'center', alignItems:'center', padding:20 },
-    title: { fontSize:24, marginBottom:20 },
-    input: { width:'100%', borderWidth:1, borderColor:'#ccc', borderRadius:5, padding:10, marginBottom:10 }
+    title: { fontSize:24, marginBottom:20, fontWeight:'bold' },
+    input: { width:'100%', borderWidth:1, borderColor:'#ccc', borderRadius:5, padding:10, marginBottom:10, textAlign:'right' }
 });

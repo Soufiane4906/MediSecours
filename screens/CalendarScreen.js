@@ -33,7 +33,17 @@ LocaleConfig.locales['fr'] = {
     dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
     today: 'Aujourd\'hui'
 };
-LocaleConfig.defaultLocale = 'fr';
+LocaleConfig.locales['ar'] = {
+    monthNames: [
+        'يناير', 'فبراير', 'مارس', 'أبريل', 'ماي', 'يونيو',
+        'يوليوز', 'غشت', 'شتنبر', 'أكتوبر', 'نونبر', 'دجنبر'
+    ],
+    monthNamesShort: ['ينا', 'فبر', 'مار', 'أبر', 'ماي', 'يون', 'يول', 'غشت', 'شت', 'أكت', 'نون', 'دجن'],
+    dayNames: ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'],
+    dayNamesShort: ['أحد', 'إثن', 'ثلث', 'أرب', 'خمس', 'جمع', 'سبت'],
+    today: 'اليوم'
+};
+LocaleConfig.defaultLocale = 'ar';
 
 // Listes des médecins et spécialités
 const doctors = [
@@ -68,31 +78,31 @@ const doctors = [
 ];
 
 const specialties = [
-    'Cardiologie',
-    'Pédiatrie',
-    'Dermatologie',
-    'Gynécologie',
-    'Ophtalmologie',
-    'Neurologie',
-    'Orthopédie',
-    'Psychiatrie'
+    'طب القلب',
+    'طب الأطفال',
+    'الأمراض الجلدية',
+    'أمراض النساء',
+    'طب العيون',
+    'طب الأعصاب',
+    'جراحة العظام',
+    'الطب النفسي'
 ];
 
 const hospitals = [
-    { id: 1, name: 'Hôpital Cheikh Khalifa', address: 'Casablanca' },
-    { id: 2, name: 'Hôpital Ibn Sina', address: 'Rabat' },
-    { id: 3, name: 'Clinique Ain Borja', address: 'Casablanca' },
-    { id: 4, name: 'Centre Hospitalier Mohammed VI', address: 'Marrakech' }
+    { id: 1, name: 'مستشفى الشيخ خليفة', address: 'الدار البيضاء' },
+    { id: 2, name: 'مستشفى ابن سينا', address: 'الرباط' },
+    { id: 3, name: 'عيادة عين برجة', address: 'الدار البيضاء' },
+    { id: 4, name: 'المركز الاستشفائي محمد السادس', address: 'مراكش' }
 ];
 
 // Types d'appointements
 const appointmentTypes = [
-    { id: 'checkup', name: 'Examen de routine', color: '#3498db', icon: 'stethoscope' },
-    { id: 'followup', name: 'Suivi médical', color: '#2ecc71', icon: 'clipboard-check' },
-    { id: 'urgent', name: 'Consultation urgente', color: '#e74c3c', icon: 'alert-circle' },
-    { id: 'specialist', name: 'Spécialiste', color: '#9b59b6', icon: 'account-heart' },
-    { id: 'labwork', name: 'Analyses', color: '#f39c12', icon: 'test-tube' },
-    { id: 'imaging', name: 'Imagerie médicale', color: '#1abc9c', icon: 'radioactive' }
+    { id: 'checkup', name: 'فحص روتيني', color: '#3498db', icon: 'stethoscope' },
+    { id: 'followup', name: 'متابعة طبية', color: '#2ecc71', icon: 'clipboard-check' },
+    { id: 'urgent', name: 'استشارة عاجلة', color: '#e74c3c', icon: 'alert-circle' },
+    { id: 'specialist', name: 'اختصاصي', color: '#9b59b6', icon: 'account-heart' },
+    { id: 'labwork', name: 'تحاليل', color: '#f39c12', icon: 'test-tube' },
+    { id: 'imaging', name: 'تصوير طبي', color: '#1abc9c', icon: 'radioactive' }
 ];
 
 export default function CalendarScreen({ navigation, route }) {
@@ -474,7 +484,7 @@ export default function CalendarScreen({ navigation, route }) {
             return (
                 <View style={styles.emptyContainer}>
                     <MaterialCommunityIcons name="calendar-blank" size={50} color="#ccc" />
-                    <Text style={styles.emptyText}>Aucun rendez-vous pour cette date</Text>
+                    <Text style={styles.emptyText}>لا يوجد مواعيد في هذا اليوم</Text>
                 </View>
             );
         }
@@ -507,7 +517,7 @@ export default function CalendarScreen({ navigation, route }) {
     return (
         <View style={[styles.container, { paddingTop: insets.top }]}>
             <View style={styles.header}>
-                <Text style={styles.headerTitle}>Rendez-vous médicaux</Text>
+                <Text style={styles.headerTitle}>مواعيدي الطبية</Text>
                 <TouchableOpacity style={styles.addButton} onPress={handleAddAppointment}>
                     <MaterialCommunityIcons name="plus" size={24} color="#fff" />
                 </TouchableOpacity>
@@ -551,7 +561,7 @@ export default function CalendarScreen({ navigation, route }) {
 
             <View style={styles.appointmentsContainer}>
                 <Text style={styles.appointmentsTitle}>
-                    {selected ? `Rendez-vous du ${selected.split('-').reverse().join('/')}` : 'Rendez-vous'}
+                    {selected ? `مواعيد ${selected.split('-').reverse().join('/')}` : 'مواعيد'}
                 </Text>
                 <ScrollView style={styles.appointmentsList}>
                     {renderAppointmentsByDate()}
@@ -582,31 +592,31 @@ export default function CalendarScreen({ navigation, route }) {
                         colors={['#3498db', '#2980b9']}
                         style={styles.modalHeader}
                     >
-                        <Text style={styles.modalTitle}>Nouveau rendez-vous</Text>
+                        <Text style={styles.modalTitle}>موعد جديد</Text>
                         <TouchableOpacity onPress={() => setModalVisible(false)}>
                             <MaterialCommunityIcons name="close" size={24} color="#fff" />
                         </TouchableOpacity>
                     </LinearGradient>
 
                     <ScrollView style={styles.modalContent}>
-                        <Text style={styles.inputLabel}>Titre</Text>
+                        <Text style={styles.inputLabel}>العنوان</Text>
                         <TextInput
                             style={styles.input}
                             value={formData.title}
                             onChangeText={(text) => setFormData({...formData, title: text})}
-                            placeholder="Titre du rendez-vous"
+                            placeholder="عنوان الموعد"
                         />
 
-                        <Text style={styles.inputLabel}>Description</Text>
+                        <Text style={styles.inputLabel}>الوصف</Text>
                         <TextInput
                             style={[styles.input, styles.textArea]}
                             value={formData.description}
                             onChangeText={(text) => setFormData({...formData, description: text})}
-                            placeholder="Description (optionnelle)"
+                            placeholder="وصف (اختياري)"
                             multiline
                         />
 
-                        <Text style={styles.inputLabel}>Date</Text>
+                        <Text style={styles.inputLabel}>التاريخ</Text>
                         <TouchableOpacity
                             style={styles.dateTimeButton}
                             onPress={() => setShowDatePicker(true)}
@@ -631,7 +641,7 @@ export default function CalendarScreen({ navigation, route }) {
                             />
                         )}
 
-                        <Text style={styles.inputLabel}>Heure</Text>
+                        <Text style={styles.inputLabel}>الساعة</Text>
                         <TouchableOpacity
                             style={styles.dateTimeButton}
                             onPress={() => setShowTimePicker(true)}
@@ -656,21 +666,21 @@ export default function CalendarScreen({ navigation, route }) {
                             />
                         )}
 
-                        <Text style={styles.inputLabel}>Spécialité</Text>
+                        <Text style={styles.inputLabel}>التخصص</Text>
                         <View style={styles.pickerContainer}>
                             <Picker
                                 selectedValue={specialty}
                                 onValueChange={(itemValue) => setSpecialty(itemValue)}
                                 style={styles.picker}
                             >
-                                <Picker.Item label="Toutes les spécialités" value="" />
+                                <Picker.Item label="كل التخصصات" value="" />
                                 {specialties.map((spec, index) => (
                                     <Picker.Item key={index} label={spec} value={spec} />
                                 ))}
                             </Picker>
                         </View>
 
-                        <Text style={styles.inputLabel}>Médecin</Text>
+                        <Text style={styles.inputLabel}>الطبيب</Text>
                         <View style={styles.pickerContainer}>
                             <Picker
                                 selectedValue={formData.doctorId}
@@ -683,7 +693,7 @@ export default function CalendarScreen({ navigation, route }) {
                             </Picker>
                         </View>
 
-                        <Text style={styles.inputLabel}>Créneaux disponibles</Text>
+                        <Text style={styles.inputLabel}>المواعيد المتاحة</Text>
                         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.timeSlotContainer}>
                             {timeSlots.map(slot => (
                                 <TouchableOpacity
@@ -714,7 +724,7 @@ export default function CalendarScreen({ navigation, route }) {
                             ))}
                         </ScrollView>
 
-                        <Text style={styles.inputLabel}>Établissement</Text>
+                        <Text style={styles.inputLabel}>المؤسسة</Text>
                         <View style={styles.pickerContainer}>
                             <Picker
                                 selectedValue={formData.hospitalId}
@@ -727,7 +737,7 @@ export default function CalendarScreen({ navigation, route }) {
                             </Picker>
                         </View>
 
-                        <Text style={styles.inputLabel}>Type de rendez-vous</Text>
+                        <Text style={styles.inputLabel}>نوع الموعد</Text>
                         <View style={styles.typeContainer}>
                             {appointmentTypes.map(type => (
                                 <TouchableOpacity
@@ -750,16 +760,16 @@ export default function CalendarScreen({ navigation, route }) {
                             ))}
                         </View>
 
-                        <Text style={styles.inputLabel}>Rappel</Text>
+                        <Text style={styles.inputLabel}>تذكير</Text>
                         <View style={styles.pickerContainer}>
                             <Picker
                                 selectedValue={formData.reminder}
                                 onValueChange={(itemValue) => setFormData({...formData, reminder: itemValue})}
                                 style={styles.picker}
                             >
-                                <Picker.Item label="1 jour avant" value="1 day" />
-                                <Picker.Item label="2 heures avant" value="2 hours" />
-                                <Picker.Item label="30 minutes avant" value="30 minutes" />
+                                <Picker.Item label="قبل يوم" value="1 day" />
+                                <Picker.Item label="قبل ساعتين" value="2 hours" />
+                                <Picker.Item label="قبل 30 دقيقة" value="30 minutes" />
                             </Picker>
                         </View>
 
@@ -767,7 +777,7 @@ export default function CalendarScreen({ navigation, route }) {
                             style={styles.saveButton}
                             onPress={handleSaveAppointment}
                         >
-                            <Text style={styles.saveButtonText}>Enregistrer</Text>
+                            <Text style={styles.saveButtonText}>حفظ</Text>
                         </TouchableOpacity>
                     </ScrollView>
                 </Animated.View>
@@ -822,7 +832,7 @@ export default function CalendarScreen({ navigation, route }) {
 
                                 {selectedAppointment.description && (
                                     <View style={styles.detailDescription}>
-                                        <Text style={styles.detailDescriptionTitle}>Notes :</Text>
+                                        <Text style={styles.detailDescriptionTitle}>ملاحظات :</Text>
                                         <Text style={styles.detailDescriptionText}>{selectedAppointment.description}</Text>
                                     </View>
                                 )}
@@ -836,7 +846,7 @@ export default function CalendarScreen({ navigation, route }) {
                                         }}
                                     >
                                         <MaterialCommunityIcons name="pencil" size={20} color="#fff" />
-                                        <Text style={styles.detailButtonText}>Modifier</Text>
+                                        <Text style={styles.detailButtonText}>تعديل</Text>
                                     </TouchableOpacity>
 
                                     <TouchableOpacity
@@ -844,7 +854,7 @@ export default function CalendarScreen({ navigation, route }) {
                                         onPress={() => handleDeleteAppointment(selectedAppointment.id)}
                                     >
                                         <MaterialCommunityIcons name="trash-can" size={20} color="#fff" />
-                                        <Text style={styles.detailButtonText}>Supprimer</Text>
+                                        <Text style={styles.detailButtonText}>حذف</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>

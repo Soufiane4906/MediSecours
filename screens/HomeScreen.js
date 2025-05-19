@@ -9,15 +9,15 @@ export default function HomeScreen({ navigation }) {
     useEffect(() => {
         if (!isAuthenticated) {
             Alert.alert(
-                'Non connecté',
-                'Veuillez vous connecter pour accéder à l\'application',
-                [{ text: 'OK', onPress: () => navigation.replace('Login') }]
+                'غير مسجل',
+                'يرجى تسجيل الدخول للوصول إلى التطبيق',
+                [{ text: 'حسنًا', onPress: () => navigation.replace('Login') }]
             );
         }
     }, [isAuthenticated, navigation]);
 
     // Get display name from user context
-    const displayName = user?.displayName || user?.username || 'Utilisateur';
+    const displayName = user?.displayName || user?.username || 'مستخدم';
 
     if (!isAuthenticated) {
         return null; // Don't render anything while redirecting
@@ -25,8 +25,8 @@ export default function HomeScreen({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Bonjour {displayName}</Text>
-            <Text style={styles.subtitle}>Que souhaitez-vous faire aujourd'hui?</Text>
+            <Text style={styles.title}>مرحبًا {displayName}</Text>
+            <Text style={styles.subtitle}>ماذا تريد أن تفعل اليوم؟</Text>
 
             <View style={styles.iconsContainer}>
                 <TouchableOpacity 
@@ -34,23 +34,23 @@ export default function HomeScreen({ navigation }) {
                     onPress={() => navigation.navigate('Map')}
                 >
                     <Image source={require('../assets/ambulance.png')} style={styles.icon} />
-                    <Text style={styles.iconText}>Ambulance</Text>
+                    <Text style={styles.iconText}>سيارة إسعاف</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity 
                     style={styles.iconButton}
-                    onPress={() => navigation.navigate('Calendrier')}
+                    onPress={() => navigation.navigate('التقويم')}
                 >
                     <Image source={require('../assets/hospital.png')} style={styles.icon} />
-                    <Text style={styles.iconText}>Hôpital</Text>
+                    <Text style={styles.iconText}>مستشفى</Text>
                 </TouchableOpacity>
             </View>
 
             <TouchableOpacity 
                 style={styles.profileButton}
-                onPress={() => navigation.navigate('Profile')}
+                onPress={() => navigation.navigate('الملف الشخصي')}
             >
-                <Text style={styles.profileButtonText}>Mon profil médical</Text>
+                <Text style={styles.profileButtonText}>ملف طبي شخصي</Text>
             </TouchableOpacity>
         </View>
     );

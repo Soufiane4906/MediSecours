@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -6,6 +6,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ThemeProvider } from './context/ThemeContext';
 import { UserProvider } from './context/UserContext';
 import { EmergencyProvider } from './context/EmergencyContext';
+import { I18nManager } from 'react-native';
 
 import LoginScreen from './screens/LoginScreen';
 import SignUpScreen from './screens/SignUpScreen';
@@ -20,13 +21,18 @@ import HospitalDetailsScreen from './screens/HospitalDetailsScreen';
 import AppointmentDetailScreen from './screens/AppointmentDetailScreen';
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 
+// Force RTL pour l'arabe
+if (!I18nManager.isRTL) {
+    I18nManager.forceRTL(true);
+}
+
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 function MainDrawer() {
     return (
         <Drawer.Navigator
-            initialRouteName="Accueil"
+            initialRouteName="الرئيسية"
             screenOptions={{
                 headerStyle: {
                     backgroundColor: '#e74c3c',
@@ -42,50 +48,50 @@ function MainDrawer() {
             }}
         >
             <Drawer.Screen
-                name="Accueil"
+                name="الرئيسية"
                 component={HomeScreen}
                 options={{
-                    title: 'Accueil',
+                    title: 'الرئيسية',
                     drawerIcon: ({color}) => <MaterialCommunityIcons name="home" size={24} color={color} />
                 }}
             />
             <Drawer.Screen
-                name="Carte"
+                name="الخريطة"
                 component={MapScreen}
                 options={{
-                    title: 'Carte des urgences',
+                    title: 'خريطة الطوارئ',
                     drawerIcon: ({color}) => <MaterialCommunityIcons name="map-marker" size={24} color={color} />
                 }}
             />
             <Drawer.Screen
-                name="Calendrier"
+                name="التقويم"
                 component={CalendarScreen}
                 options={{
-                    title: 'Rendez-vous',
+                    title: 'المواعيد',
                     drawerIcon: ({color}) => <MaterialCommunityIcons name="calendar" size={24} color={color} />
                 }}
             />
             <Drawer.Screen
-                name="Contacts"
+                name="جهات الاتصال"
                 component={EmergencyContactsScreen}
                 options={{
-                    title: 'Contacts d\'urgence',
+                    title: 'جهات اتصال الطوارئ',
                     drawerIcon: ({color}) => <MaterialCommunityIcons name="phone" size={24} color={color} />
                 }}
             />
             <Drawer.Screen
-                name="Profile"
+                name="الملف الشخصي"
                 component={ProfileScreen}
                 options={{
-                    title: 'Mon profil',
+                    title: 'ملفي الشخصي',
                     drawerIcon: ({color}) => <MaterialCommunityIcons name="account" size={24} color={color} />
                 }}
             />
             <Drawer.Screen
-                name="Settings"
+                name="الإعدادات"
                 component={SettingsScreen}
                 options={{
-                    title: 'Paramètres',
+                    title: 'الإعدادات',
                     drawerIcon: ({color}) => <MaterialCommunityIcons name="cog" size={24} color={color} />
                 }}
             />
@@ -109,12 +115,12 @@ export default function App() {
                                         SignUp: 'signup',
                                         Home: {
                                             screens: {
-                                                Accueil: 'home',
-                                                Carte: 'map',
-                                                Calendrier: 'calendar',
-                                                Contacts: 'contacts',
-                                                Profile: 'profile',
-                                                Settings: 'settings',
+                                                الرئيسية: 'home',
+                                                الخريطة: 'map',
+                                                التقويم: 'calendar',
+                                                جهات_الاتصال: 'contacts',
+                                                الملف_الشخصي: 'profile',
+                                                الإعدادات: 'settings',
                                             }
                                         },
                                         AmbulanceType: 'ambulance-type',
@@ -141,4 +147,3 @@ export default function App() {
         </SafeAreaProvider>
     );
 }
-

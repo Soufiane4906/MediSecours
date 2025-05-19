@@ -25,8 +25,8 @@ export default function ProfileScreen() {
 
     useEffect(() => {
         if (!isAuthenticated) {
-            Alert.alert('Non connecté', 'Veuillez vous connecter pour accéder à votre profil', [
-                { text: 'OK', onPress: () => navigation.navigate('Login') }
+            Alert.alert('غير مسجل', 'يرجى تسجيل الدخول للوصول إلى ملفك الشخصي', [
+                { text: 'حسنًا', onPress: () => navigation.navigate('Login') }
             ]);
             return;
         }
@@ -44,7 +44,7 @@ export default function ProfileScreen() {
                 setProfile(JSON.parse(storedProfile));
             }
         } catch (error) {
-            console.error('Erreur lors du chargement du profil:', error);
+            console.error('خطأ في تحميل الملف الشخصي:', error);
         }
     };
 
@@ -60,21 +60,21 @@ export default function ProfileScreen() {
             }
 
             setIsEditing(false);
-            Alert.alert('Succès', 'Profil enregistré avec succès');
+            Alert.alert('نجاح', 'تم حفظ الملف الشخصي بنجاح');
         } catch (error) {
-            console.error('Erreur lors de l\'enregistrement du profil:', error);
-            Alert.alert('Erreur', 'Impossible d\'enregistrer le profil');
+            console.error('خطأ في حفظ الملف الشخصي:', error);
+            Alert.alert('خطأ', 'تعذر حفظ الملف الشخصي');
         }
     };
 
     const handleLogout = () => {
         Alert.alert(
-            'Déconnexion',
-            'Êtes-vous sûr de vouloir vous déconnecter?',
+            'تسجيل الخروج',
+            'هل أنت متأكد أنك تريد تسجيل الخروج؟',
             [
-                { text: 'Annuler', style: 'cancel' },
-                { 
-                    text: 'Déconnexion', 
+                { text: 'إلغاء', style: 'cancel' },
+                {
+                    text: 'تسجيل الخروج',
                     onPress: () => {
                         logout();
                         navigation.navigate('Login');
@@ -88,7 +88,7 @@ export default function ProfileScreen() {
     if (!isAuthenticated) {
         return (
             <View style={styles.container}>
-                <Text>Veuillez vous connecter pour accéder à votre profil</Text>
+                <Text>يرجى تسجيل الدخول للوصول إلى ملفك الشخصي</Text>
             </View>
         );
     }
@@ -96,7 +96,7 @@ export default function ProfileScreen() {
     return (
         <ScrollView style={styles.container}>
             <View style={styles.header}>
-                <Text style={styles.title}>Mon profil médical</Text>
+                <Text style={styles.title}>ملفي الطبي</Text>
                 <TouchableOpacity onPress={() => isEditing ? saveProfile() : setIsEditing(true)}>
                     <MaterialCommunityIcons
                         name={isEditing ? "content-save" : "pencil"}
@@ -107,107 +107,107 @@ export default function ProfileScreen() {
             </View>
 
             <View style={styles.userInfo}>
-                <Text style={styles.username}>Utilisateur: {user.username}</Text>
-                {user.phone && <Text style={styles.phone}>Téléphone: {user.phone}</Text>}
+                <Text style={styles.username}>المستخدم: {user.username}</Text>
+                {user.phone && <Text style={styles.phone}>الهاتف: {user.phone}</Text>}
             </View>
 
             <View style={styles.formGroup}>
-                <Text style={styles.label}>Nom complet</Text>
+                <Text style={styles.label}>الاسم الكامل</Text>
                 <TextInput
                     style={styles.input}
                     value={profile.name}
                     onChangeText={(text) => setProfile({...profile, name: text})}
                     editable={isEditing}
-                    placeholder="Entrez votre nom complet"
+                    placeholder="أدخل اسمك الكامل"
                 />
             </View>
 
             <View style={styles.formGroup}>
-                <Text style={styles.label}>Date de naissance</Text>
+                <Text style={styles.label}>تاريخ الميلاد</Text>
                 <TextInput
                     style={styles.input}
                     value={profile.birthDate}
                     onChangeText={(text) => setProfile({...profile, birthDate: text})}
                     editable={isEditing}
-                    placeholder="JJ/MM/AAAA"
+                    placeholder="يوم/شهر/سنة"
                 />
             </View>
 
             <View style={styles.formGroup}>
-                <Text style={styles.label}>Groupe sanguin</Text>
+                <Text style={styles.label}>فصيلة الدم</Text>
                 <TextInput
                     style={styles.input}
                     value={profile.bloodType}
                     onChangeText={(text) => setProfile({...profile, bloodType: text})}
                     editable={isEditing}
-                    placeholder="Ex: A+, O-, etc."
+                    placeholder="مثال: A+، O-، إلخ"
                 />
             </View>
 
             <View style={styles.formRow}>
                 <View style={[styles.formGroup, {flex: 1, marginRight: 5}]}>
-                    <Text style={styles.label}>Taille (cm)</Text>
+                    <Text style={styles.label}>الطول (سم)</Text>
                     <TextInput
                         style={styles.input}
                         value={profile.height}
                         onChangeText={(text) => setProfile({...profile, height: text})}
                         editable={isEditing}
                         keyboardType="numeric"
-                        placeholder="Ex: 175"
+                        placeholder="مثال: 175"
                     />
                 </View>
                 <View style={[styles.formGroup, {flex: 1, marginLeft: 5}]}>
-                    <Text style={styles.label}>Poids (kg)</Text>
+                    <Text style={styles.label}>الوزن (كجم)</Text>
                     <TextInput
                         style={styles.input}
                         value={profile.weight}
                         onChangeText={(text) => setProfile({...profile, weight: text})}
                         editable={isEditing}
                         keyboardType="numeric"
-                        placeholder="Ex: 70"
+                        placeholder="مثال: 70"
                     />
                 </View>
             </View>
 
             <View style={styles.formGroup}>
-                <Text style={styles.label}>Allergies</Text>
+                <Text style={styles.label}>الحساسية</Text>
                 <TextInput
                     style={[styles.input, styles.textArea]}
                     value={profile.allergies}
                     onChangeText={(text) => setProfile({...profile, allergies: text})}
                     editable={isEditing}
                     multiline
-                    placeholder="Listez vos allergies"
+                    placeholder="اذكر أي حساسية لديك"
                 />
             </View>
 
             <View style={styles.formGroup}>
-                <Text style={styles.label}>Maladies chroniques</Text>
+                <Text style={styles.label}>الأمراض المزمنة</Text>
                 <TextInput
                     style={[styles.input, styles.textArea]}
                     value={profile.chronicDiseases}
                     onChangeText={(text) => setProfile({...profile, chronicDiseases: text})}
                     editable={isEditing}
                     multiline
-                    placeholder="Listez vos maladies chroniques"
+                    placeholder="اذكر أي أمراض مزمنة"
                 />
             </View>
 
             <View style={styles.formGroup}>
-                <Text style={styles.label}>Médicaments</Text>
+                <Text style={styles.label}>الأدوية</Text>
                 <TextInput
                     style={[styles.input, styles.textArea]}
                     value={profile.medications}
                     onChangeText={(text) => setProfile({...profile, medications: text})}
                     editable={isEditing}
                     multiline
-                    placeholder="Listez vos médicaments actuels"
+                    placeholder="اذكر الأدوية الحالية"
                 />
             </View>
 
             <View style={styles.logoutContainer}>
                 <Button
-                    title="Déconnexion"
+                    title="تسجيل الخروج"
                     onPress={handleLogout}
                     color="#e74c3c"
                 />
@@ -268,6 +268,7 @@ const styles = StyleSheet.create({
         marginBottom: 5,
         fontWeight: '500',
         color: '#333',
+        textAlign: 'right',
     },
     input: {
         backgroundColor: '#fff',
@@ -276,6 +277,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         padding: 10,
         fontSize: 16,
+        textAlign: 'right',
     },
     textArea: {
         minHeight: 80,
