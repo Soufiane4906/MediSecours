@@ -18,7 +18,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
-import { EmergencyProvider, useEmergency } from '../context/EmergencyContext';
 import { useUser } from '../context/UserContext';
 
 // Waypoints pour une route plus réaliste
@@ -155,7 +154,6 @@ export default function MapScreen({ navigation, route }) {
     const emergencySlideAnim = useRef(new Animated.Value(-100)).current;
     const callAnim = useRef(new Animated.Value(1)).current;
     const insets = useSafeAreaInsets();
-    const emergency = useEmergency();
     const user = useUser();
 
     // Obtenir la position actuelle
